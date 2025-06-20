@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sup.mapper.GoodsNumMapper">
+
+    <insert id="addgoodsNum" >
+        insert into goods(goods_id, goods_name, goods_price, store_goods_num, storehouse_id)
+        values (#{goodsId},#{goodsName},#{goodsPrice},#{storeGoodsNum},#{storehouseId})
+    </insert>
+    <update id="updateNum">
+        update goods
+        <set>
+            <if test="storeGoodsNum!=null">
+                store_goods_num=#{storeGoodsNum}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+</mapper>

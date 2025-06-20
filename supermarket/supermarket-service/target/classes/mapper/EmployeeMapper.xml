@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sup.mapper.EmployeeMapper">
+
+    <insert id="addEmployee">
+        insert into supermarket.employee(employee_name, employee_sex, employee_age, employee_title, entry_date)
+        VALUES(#{employeeName},#{employeeSex},#{employeeAge},#{employeeTitle},#{entryDate})
+    </insert>
+    <update id="updateEmployee">
+        update supermarket.employee
+        <set>
+            <if test="employeeName!=null">
+                employee_name=#{employeeName},
+            </if>
+            <if test="employeeSex!=null">
+                employee_sex=#{employeeSex},
+            </if>
+            <if test="employeeAge!=null">
+                employee_age=#{employeeAge},
+            </if>
+            <if test="employeeTitle!=null">
+                employee_title=#{employeeTitle},
+            </if>
+            <if test="entryDate!=null">
+                employee_date=#{entryDate},
+            </if>
+            <if test="password!=null">
+                password=#{password}
+            </if>
+        </set>
+        where employee_id=#{employeeId}
+    </update>
+    <delete id="deleteEmployee">
+        delete from supermarket.employee where employee_id=#{id}
+    </delete>
+    <select id="findById" resultType="com.sup.vo.EmployeeVo">
+        select * from supermarket.employee where employee_id=#{id}
+    </select>
+    <select id="page" resultType="com.sup.pojo.Employee">
+        select * from supermarket.employee
+        <where>
+            <if test="name!=null">
+                employee_name like concat('%',#{name},'%')
+            </if>
+        </where>
+        order by entry_date desc
+    </select>
+    <select id="findByUserName" resultType="com.sup.pojo.Employee">
+        select * from supermarket.employee where employee_name=#{name}
+    </select>
+</mapper>
